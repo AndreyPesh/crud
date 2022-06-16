@@ -1,4 +1,3 @@
-import { IncomingMessage, ServerResponse } from 'http';
 import Router from '../Router/Router';
 import { createUser, getUsers } from './user-controller';
 

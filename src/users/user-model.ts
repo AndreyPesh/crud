@@ -1,4 +1,4 @@
-import { BodyUserData, UserData } from '../types/interface';
+import { UserData } from '../types/interface';
 
 const users: Array<UserData> = [];
 
