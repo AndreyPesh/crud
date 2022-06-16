@@ -14,11 +14,14 @@ export interface ServerRouter {
   delete(path: string, handler: HandlerEndpoint): void;
 }
 
-export interface UserData {
-  id: string;
+export interface BodyUserData {
   username: string;
   age: number;
   hobbies: Array<string>;
+}
+
+export interface UserData extends BodyUserData {
+  id: string;
 }
 
 export interface Endpoints {

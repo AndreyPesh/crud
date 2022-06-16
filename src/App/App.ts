@@ -36,19 +36,29 @@ export default class App {
 
   private _createServer(): Server {
     return http.createServer((req, res) => {
-      try {
-        this._middleware.forEach((middleware) => middleware(req, res));
+      let body = '';
 
-        const emitted = this._emitter.emit(this._getRouteMask(req.url, req.method), req, res);
+      req.on('data', (chunk) => {
+        body += chunk;
+      });
 
-        if (!emitted) {
-          res.writeHead(404, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ message: 'Page not found'}));
+      req.on('end', () => {
+        try {
+          if (body) {
+            req.bodyUser = JSON.parse(body);
+          }
+          this._middleware.forEach((middleware) => middleware(req, res));
+
+          const emitted = this._emitter.emit(this._getRouteMask(req.url, req.method), req, res);
+
+          if (!emitted) {
+            res.send(404, { message: 'Page not found' });
+          }
+        } catch (error) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ message: (error as Error).message }));
         }
-      } catch (error) {
-        res.writeHead(400, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ message: (error as Error).message }));
-      }
+      });
     });
   }
 
