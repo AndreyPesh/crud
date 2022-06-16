@@ -1,15 +1,17 @@
-import { IncomingMessage, ServerResponse } from 'http';
-import { Endpoints } from '../types/interface';
+import { Endpoints, ServerRouter } from '../types/interface';
 import { HandlerEndpoint, MethodsRequest } from '../types/type';
-import { emitter } from '../Emitter/Emitter';
 
-export default class Router {
-  private endpoints: Endpoints;
+export default class Router implements ServerRouter {
+  private _endpoints: Endpoints;
   constructor() {
-    this.endpoints = {};
+    this._endpoints = {};
   }
 
-  private request(method: MethodsRequest = 'GET', path: string, handler: HandlerEndpoint) {
+  get endpoints() {
+    return this._endpoints;
+  }
+
+  private _request(method: MethodsRequest = 'GET', path: string, handler: HandlerEndpoint) {
     if (!this.endpoints[path]) {
       this.endpoints[path] = {};
     }
@@ -18,9 +20,10 @@ export default class Router {
       throw new Error(`${method} by address ${path} already exist`);
     }
     endpoint[method] = handler;
-    emitter.on(`[${path}]:[${method}]`, (req: IncomingMessage, res: ServerResponse) => {
-      handler(req, res);
-    });
+  }
+
+  get request() {
+    return this._request;
   }
 
   get(path: string, handler: HandlerEndpoint) {
