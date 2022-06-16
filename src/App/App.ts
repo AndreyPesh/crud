@@ -1,15 +1,21 @@
 import http, { IncomingMessage, Server, ServerResponse } from 'http';
 import EventEmitter from 'events';
 import { ServerRouter } from '../types/interface';
-import { MethodsRequest } from '../types/type';
+import { HandlerEndpoint, MethodsRequest } from '../types/type';
 
 export default class App {
   private _emitter: EventEmitter;
   private _server: Server;
+  private _middleware: Array<HandlerEndpoint>;
 
   constructor() {
     this._emitter = new EventEmitter();
     this._server = this._createServer();
+    this._middleware = [];
+  }
+
+  public use(middleware: HandlerEndpoint) {
+    this._middleware.push(middleware);
   }
 
   public addRouter(router: ServerRouter) {
@@ -30,10 +36,18 @@ export default class App {
 
   private _createServer(): Server {
     return http.createServer((req, res) => {
-      const emitted = this._emitter.emit(this._getRouteMask(req.url, req.method), req, res);
-      if (!emitted) {
-        res.writeHead(404);
-        res.end('Page not found');
+      try {
+        this._middleware.forEach((middleware) => middleware(req, res));
+
+        const emitted = this._emitter.emit(this._getRouteMask(req.url, req.method), req, res);
+
+        if (!emitted) {
+          res.writeHead(404, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ message: 'Page not found'}));
+        }
+      } catch (error) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ message: (error as Error).message }));
       }
     });
   }

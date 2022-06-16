@@ -1,24 +1,17 @@
-import http, { IncomingMessage, ServerResponse } from 'http';
 import 'dotenv/config';
 import App from './App/App';
-import { UserData } from './types/interface';
-import Router from './Router/Router';
-
+import { parseUrl } from './middleware/parseUrl';
+import sendJson from './middleware/sendJson';
+import { userRouter } from './users/user-router';
 
 const PORT = process.env.PORT || 4000;
 const server = new App();
-const users: Array<UserData> = [];
-const router = new Router();
 
-router.get('/api/users', (req: IncomingMessage, res: ServerResponse) => {
-  res.end(`USERS ${req.method}`);
+server.use(parseUrl);
+server.use(sendJson);
+
+server.addRouter(userRouter);
+
+server.listen(Number(PORT), () => {
+  console.log(`Server running on  port ${PORT}`);
 });
-
-router.post('/api/users', (req: IncomingMessage, res: ServerResponse) => {
-  res.end(`USERS ${req.method}`);
-});
-
-server.addRouter(router);
-
-server.listen(Number(PORT), () => {console.log(`Server running on  port ${PORT}`)});
-

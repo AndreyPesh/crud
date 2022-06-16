@@ -24,3 +24,7 @@ export interface UserData {
 export interface Endpoints {
   [key: string]: Endpoint;
 }
+
+export interface ErrorData {
+  message: string;
+}
