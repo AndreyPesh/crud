@@ -24,4 +24,5 @@
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules"],
+  "files":["declare.d.ts"]
 }
