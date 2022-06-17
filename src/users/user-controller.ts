@@ -25,6 +25,10 @@ export const getUsers = async (req: IncomingMessage, res: ServerResponse) => {
 
 export const createUser = async (req: IncomingMessage, res: ServerResponse) => {
   try {
+    if (!req.bodyUser) {
+      res.send(400, { message: 'User data not sent' });
+      return;
+    }
     const isDataCorrect = checkData(req.bodyUser);
     if (isDataCorrect) {
       const newUser = createNewUser(req.bodyUser);
