@@ -5,12 +5,12 @@ import { HandlerEndpoint, MethodsRequest } from '../types/type';
 
 export default class App {
   private _emitter: EventEmitter;
-  private _server: Server;
+  public server: Server;
   private _middleware: Array<HandlerEndpoint>;
 
   constructor() {
     this._emitter = new EventEmitter();
-    this._server = this._createServer();
+    this.server = this.createServer();
     this._middleware = [];
   }
 
@@ -34,7 +34,7 @@ export default class App {
     });
   }
 
-  private _createServer(): Server {
+  public createServer(): Server {
     return http.createServer((req, res) => {
       let body = '';
 
@@ -70,6 +70,6 @@ export default class App {
   }
 
   public listen(port: number, showStartMessage: () => void) {
-    this._server.listen(port, showStartMessage);
+    this.server.listen(port, showStartMessage);
   }
 }

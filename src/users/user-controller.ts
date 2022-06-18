@@ -79,7 +79,7 @@ export const deleteUser = async (req: IncomingMessage, res: ServerResponse) => {
       }
       const isUserDeleted = await deleteUserById(req.param);
       if (isUserDeleted) {
-        res.send(200, { message: `User was deleted` });
+        res.send(204, { message: `User was deleted` });
       } else {
         res.send(404, { message: `User doesn't exist` });
       }
