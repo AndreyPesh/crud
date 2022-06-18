@@ -7,9 +7,7 @@ import request from 'supertest';
 jest.mock('../src/users/user-model');
 import { getAllUser } from '../src/users/user-model';
 
-describe('Scenario_01', () => {
-  let responseCreateUser: request.Response;
-  const listKeysDataUser = ['id', 'username', 'age', 'hobbies'];
+describe('Scenario_02', () => {
   const URL_USERS = '/api/users';
   const app = new App();
   app.addRouter(userRouter);
