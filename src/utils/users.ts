@@ -19,6 +19,10 @@ export const checkData = (userData: BodyUserData) => {
     return false;
   }
 
+  if (Object.keys(userData).length > 3) {
+    return false;
+  }
+
   return true;
 };
 

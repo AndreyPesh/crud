@@ -29,6 +29,10 @@ export const createUser = async (req: IncomingMessage, res: ServerResponse) => {
       res.send(400, { message: 'User data not sent' });
       return;
     }
+    if (req.param) {
+      res.send(400, { message: 'Bad request. ID should not be' });
+      return;
+    }
     const isDataCorrect = checkData(req.bodyUser);
     if (isDataCorrect) {
       const newUser = createNewUser(req.bodyUser);
