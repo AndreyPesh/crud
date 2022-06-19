@@ -7,7 +7,7 @@
     npm run start:dev
 ```
 
-> :warning: **If you are not using Windows and the app is not working.** 
+> :warning: **If app is not working.** 
 **Try change the variable HOSTNAME_SERVER in the `.env` file**: HOSTNAME_SERVER=http://your_hostname
 
 ## Endpoints:
