@@ -3,6 +3,7 @@
 ## Run server
 
 ```bash
+    use LTS node version
     npm i
     npm run start:prod
 ```
