@@ -4,7 +4,7 @@
 
 ```bash
     npm i
-    npm run start:dev
+    npm run start:prod
 ```
 
 > :warning: **If app is not working.** 
