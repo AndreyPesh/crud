@@ -1,4 +1,4 @@
-# crud
+# CRUD-API
 
 ## Run server
 
@@ -6,6 +6,9 @@
     npm i
     npm run start:dev
 ```
+
+> :warning: **If you are not using Windows and the app is not working.** 
+**Try change the variable HOSTNAME_SERVER in the `.env` file**: HOSTNAME_SERVER=http://your_hostname
 
 ## Endpoints:
 
@@ -21,7 +24,7 @@
 
   - `DELETE /api/users/id` - delete existing user from database
 
-### Example data creating user
+### Data creating user
 
 - `id` — unique identifier (`string, uuid`) generated on server side
 - `username` — user's name (`string, required`)
@@ -39,5 +42,3 @@
     "hobbies": ["Art"]
  }
 ```
-
-> :warning: **If you are using mobile browser**: Be very careful here!
