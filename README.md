@@ -9,7 +9,7 @@
 ```
 
 > :warning: **If app is not working.** 
-**Try change the variable HOSTNAME_SERVER in the `.env` file**: HOSTNAME_SERVER=http://your_hostname
+**Try to change the variable HOSTNAME_SERVER in the `.env` file**: HOSTNAME_SERVER=http://your_hostname
 
 ## Endpoints:
 
